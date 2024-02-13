@@ -3,11 +3,15 @@ class PriorityQueue:
         self.Queue = []
         
     def __len__(self):
-         return len(self.Queue)
+        return len(self.Queue)
     
     def push(self, task, priority):
         self.Queue.append((task, priority))
         self.Queue.sort(key=lambda x: x[1])
+
+    def pop(self):
+        task = self.Queue.pop(0)
+        return task[0]
 
     def __iter__(self):
         self.position = 0
@@ -15,7 +19,7 @@ class PriorityQueue:
     
     def __next__(self):
         if self.position < len(self.Queue):
-            queue = self.Queue[self.position]
+            queue = self.Queue[self.position][0]
             self.position += 1
             return queue
         else:

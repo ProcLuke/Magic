@@ -16,9 +16,10 @@ def test_pop():
     pq.push("Task 1", 3)
     pq.push("Task 2", 1)
     pq.push("Task 3", 2)
+    pq.push("Task 4", 1)
 
     assert pq.pop() == "Task 2"
-    assert len(pq) == 2
+    assert len(pq) == 3
 
 
 def test_empty_pop():
@@ -32,6 +33,7 @@ def test_iteration():
     pq.push("Task 1", 3)
     pq.push("Task 2", 1)
     pq.push("Task 3", 2)
+    pq.push("Task 4", 1)
 
     tasks = list(pq)
-    assert tasks == ["Task 2", "Task 3", "Task 1"]
+    assert tasks == ["Task 2", "Task 4", "Task 3", "Task 1"]
