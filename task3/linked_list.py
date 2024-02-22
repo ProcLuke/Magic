@@ -36,11 +36,11 @@ class DoublyLinkedList:
             node = node.next_node
         return node.data
     
-    def __setitem__(self, index:int, value):
+    def __setitem__(self, index:int, data):
         node = self.head
         for _ in range(index):
             node = node.next_node
-        node.data = value
+        node.data = data
         return node.data
 
     def __delitem__(self, index:int):
@@ -57,31 +57,29 @@ class DoublyLinkedList:
         else:
             node.prev_node.next_node = node.next_node
         self.length -= 1
-    
-    def insert(self, value, index:int):
-        new_node = Node(value)
-        if self.length == 0:
-            self.head = new_node
-            self.tail = new_node
-        elif index < self.length:
-            node = self.head
-            for _ in range(index):
-                node = node.next_node
-            new_node.next_node = node
-            new_node.prev_node = node.prev_node
 
-            for _ in range(index, self.length):
-                node.next_node = node.next_node.next_node
-                node.prev_node = node
-                node = node.next_node
-        else:
+    def insert(self, data, index:int):
+        if index < 0 or index > self.length:
+            raise IndexError
+
+        new_node = Node(data)
+        if index == 0:
+            new_node.next_node = self.head
+            if self.head != None:
+                self.head.prev_node = new_node
+            self.head = new_node
+            if self.length == 0:
+                self.tail = new_node
+        elif index == self.length:
             self.tail.next_node = new_node
             new_node.prev_node = self.tail
             self.tail = new_node
-        self.length +=1
-
-
-linked_list = DoublyLinkedList()
-linked_list.append(1)
-linked_list.append(2)
-linked_list.append(3)
+        else:
+            node = self.head
+            for _ in range(index - 1):
+                node = node.next_node
+            new_node.next_node = node.next_node
+            new_node.prev_node = node
+            node.next_node.prev_node = new_node
+            node.next_node = new_node
+        self.length += 1
